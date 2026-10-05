@@ -203,7 +203,7 @@ export default {
       end: "16:00",
       passwordHash: "1b6405d1ef5a816105210b20a8f0fc129869a25876e45c0891e4f6d972bf74c2",
       hint: "Ich bin ein Gas und leuchte bunt in Reklameschildern",
-      title: "Blacklight-Minigolf mit Gästen,
+      title: "Blacklight-Minigolf mit Gästen",
       tagline: "18 Bahnen im Schwarzlicht",
       place: {
         name: "Arcadia 3D Minigolf",
