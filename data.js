@@ -61,6 +61,8 @@ export default {
     unlockLabel: "Passwort für diese Karte",
     unlockButton: "Entsperren",
     hintLabel: "Kleiner Tipp",
+    // Steht im Passwort-Dialog, solange der Tipp noch nicht freigeschaltet ist (siehe hintFrom).
+    hintLocked: "Hinweise gibts erst an deinem großen Tag",
     wrong: "Leider nicht ganz. Lies den Tipp nochmal – du schaffst das!",
     lockedName: "Verschlossene Überraschung",
     close: "Schließen",
@@ -101,6 +103,8 @@ export default {
   //   startPrefix   z. B. "ab" vor der Startzeit
   //   passwordHash  Hash des Passworts (siehe oben)
   //   hint          Rätsel/Tipp im Passwort-Dialog (leer lassen = kein Tipp)
+  //   hintFrom      ab wann der Tipp sichtbar ist (Datum wie bei settings.birthday).
+  //                 Weglassen = ab dem Geburtstag; davor steht ui.hintLocked.
   //   title         Name der Aktivität (erst nach dem Entsperren sichtbar)
   //   tagline       kurzer Untertitel auf der Karte
   //   place         { name, address, mapsQuery }  – address leer = keine Adresse/kein Kartenlink
@@ -117,6 +121,7 @@ export default {
       start: "08:00",
       end: "10:00",
       passwordHash: "435e2a5662904f649cd72151c9194b295353d92b0396d3e53bb182b59e3d4a56",
+      hintFrom: "2026-12-02T00:00:00+01:00", // Frühstück: schon einen Tag vorher
       hint: "Ohne mich startest du keinen Morgen. Ich bin schwarz, heiß und manchmal mit Milch.",
       title: "Frühstück im Hofcafé",
       tagline: "Ein Morgen in Zweisamkeit",

@@ -678,6 +678,37 @@ body::before {
   width: 26px;
   height: 26px;
 }
+/* Gesperrt: nur die farbige Fläche, unscharf, ohne Symbol (die Wahl-Kachel zeigt ihr Symbol) */
+.tile.is-locked:not(.tile--choice) .tile__icon,
+.tile.is-locked .half__icon {
+  filter: blur(4px);
+  opacity: 0.85;
+  box-shadow: none;
+}
+/* Entsperren: Fläche wird scharf, Symbol taucht auf */
+.tile.just-unlocked .tile__icon,
+.tile.just-unlocked .half__icon {
+  animation: unblur-icon 0.9s var(--ease) both;
+}
+.tile.just-unlocked .tile__icon .icon,
+.tile.just-unlocked .half__icon .icon {
+  animation: icon-in 0.9s var(--ease) both;
+}
+.tile--choice.just-unlocked .tile__icon {
+  animation: none;
+}
+.tile--choice.just-unlocked .tile__icon .icon {
+  animation: none;
+}
+@keyframes unblur-icon {
+  from { filter: blur(4px); }
+  to { filter: blur(0); }
+}
+@keyframes icon-in {
+  0%, 25% { opacity: 0; transform: scale(0.4) rotate(-12deg); }
+  70% { opacity: 1; transform: scale(1.12); }
+  100% { opacity: 1; transform: none; }
+}
 .tile__time {
   white-space: nowrap;
   font-weight: 600;
@@ -1021,6 +1052,24 @@ body::before {
 .sheet__lockbadge .icon {
   width: 18px;
   height: 18px;
+}
+.sheet__bigLock {
+  width: 38px !important;
+  height: 38px !important;
+}
+.sheet.is-unlocked .sheet__bigLock .shackle {
+  transform: translateY(-3px) rotate(28deg);
+}
+.hint.hint--locked {
+  border-style: solid;
+  background: transparent;
+  border-color: var(--line);
+}
+.hint.hint--locked .hint__label {
+  color: var(--ink-soft);
+}
+.hint.hint--locked .hint__text {
+  color: var(--ink-soft);
 }
 .sheet.is-unlocked .sheet__lock {
   animation: pop 0.6s var(--ease);

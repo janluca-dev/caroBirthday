@@ -41,6 +41,12 @@ Alles steht in **`data.js`** – Texte einfach zwischen den Anführungszeichen �
   Passwort-Dialog) und `passwordHash`.
 - Die Vormittags-Wahl ist der Eintrag mit `type: "choice"`: ein gemeinsames Passwort,
   zwei `options` mit jeweils allen Details.
+- Die Rätsel-Tipps (`hint`) erscheinen erst ab dem Geburtstag (`settings.birthday`),
+  beim Frühstück schon einen Tag vorher (`hintFrom`). Vorher steht `ui.hintLocked`
+  („Hinweise gibts erst an deinem großen Tag“). Mit `hintFrom` kannst du das Datum je
+  Aktivität festlegen. Das Passwort funktioniert unabhängig davon jederzeit.
+- Gesperrte Kacheln zeigen nur eine unscharfe Farbfläche statt des Symbols; das Symbol
+  erscheint erst beim Entsperren (die Wahl-Kachel zeigt ihr Symbol von Anfang an).
 - Ist `place.address` leer, gibt es keine Adresse und keinen Kartenlink (so beim Abendessen).
 - `id` bitte nicht ändern – daran hängt der gespeicherte Entsperr-Zustand.
 

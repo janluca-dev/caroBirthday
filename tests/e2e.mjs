@@ -37,8 +37,12 @@ const SECRET_TITLES = [
   "Panorama Therme Beuren",
 ];
 
-async function newPage(opts, { reducedMotion = "no-preference" } = {}) {
+// Standard-Testzeitpunkt: vor dem Geburtstag (damit die Tests auch nach dem 3.12. stimmen)
+const BEFORE = "2026-10-05T12:00:00+02:00";
+
+async function newPage(opts, { reducedMotion = "no-preference", now = BEFORE } = {}) {
   const ctx = await browser.newContext({ ...opts, reducedMotion, locale: "de-DE", timezoneId: "Europe/Berlin" });
+  await ctx.clock.setFixedTime(new Date(now));
   const page = await ctx.newPage();
   page.errors = [];
   page.on("pageerror", (e) => page.errors.push(String(e)));
@@ -97,12 +101,26 @@ try {
   ok(await noHScroll(page), "kein horizontales Scrollen");
   ok((await page.$$(".tile")).length === 5, "5 Kacheln (keine Fahrt-/Puffer-Kacheln)");
   ok(!html.match(/Fahrt|Puffer/), "keine Fahrtzeiten/Puffer erwähnt");
+  ok(
+    await page.evaluate(() =>
+      [...document.querySelectorAll(".tile.is-locked")].every(
+        (t) => !t.querySelector(".half__icon svg") && (t.classList.contains("tile--choice") || !t.querySelector(".tile__icon svg")),
+      ),
+    ),
+    "gesperrte Kacheln: kein Aktivitäts-Symbol im DOM",
+  );
+  ok(!!(await page.$('.tile--choice .tile__icon svg')), "Wahl-Kachel zeigt ihr Symbol schon gesperrt");
 
   section("Mobil: Kachel entsperren & Karte");
   await page.click('.tile[data-key="fruehstueck"]');
   await page.waitForSelector(".modal--unlock #u-pw");
   await page.waitForTimeout(500);
   await shot(page, "m05-passwort-dialog");
+  {
+    const t = await page.textContent(".modal--unlock");
+    ok(t.includes("Hinweise gibts erst an deinem großen Tag") && !t.includes("Milch"), "vor dem Tag: Tipp verborgen, Platzhaltertext");
+    ok(!(await page.$(".modal--unlock .sheet__lock .icon:not(.sheet__bigLock)")), "Passwort-Dialog verrät kein Symbol");
+  }
   // Fokus-Falle
   for (let i = 0; i < 8; i++) await page.keyboard.press("Tab");
   ok(await focusInside(page, ".modal--unlock"), "Fokus bleibt im Dialog (Tab)");
@@ -122,6 +140,7 @@ try {
   await unlock(page, "fruehstueck", " Kaffee");
   await page.waitForTimeout(900);
   ok((await page.textContent('.tile[data-key="fruehstueck"] .tile__title')).includes("Frühstück"), "Titel nach Entsperren eingetauscht");
+  ok(!!(await page.$('.tile[data-key="fruehstueck"] .tile__icon svg')), "Symbol erscheint mit dem Entsperren");
   await page.waitForSelector(".modal--card .bcard.is-settled", { timeout: 6000 });
   await page.waitForTimeout(300);
   await shot(page, "m07-karte-fruehstueck");
@@ -308,6 +327,40 @@ try {
         .slice(0, 5),
     );
     ok(overflow.length === 0, `${width}px: kein Element ragt heraus ${overflow.join(", ")}`);
+    await p.context().close();
+  }
+
+  // ══════════════════════════════════════════════════════════════════
+  section("Hinweise nach Datum");
+  const hintText = async (p, key) => {
+    await p.click(`.tile[data-key="${key}"]`);
+    await p.waitForSelector(".modal--unlock .hint__text");
+    const t = await p.textContent(".modal--unlock .hint__text");
+    await p.keyboard.press("Escape");
+    await p.waitForTimeout(400);
+    return t;
+  };
+  for (const [now, label, fr, golf, today] of [
+    ["2026-12-01T23:59:00+01:00", "1.12. 23:59", false, false, false],
+    ["2026-12-02T00:00:30+01:00", "2.12. 00:00", true, false, false],
+    ["2026-12-03T00:00:30+01:00", "3.12. 00:00", true, true, true],
+  ]) {
+    const p = await newPage(MOBILE, { now });
+    await passGate(p);
+    const f = await hintText(p, "fruehstueck");
+    const g = await hintText(p, "minigolf");
+    ok(f.includes("Milch") === fr, `${label}: Frühstücks-Tipp ${fr ? "sichtbar" : "verborgen"}`);
+    ok(g.includes("Gas") === golf, `${label}: Minigolf-Tipp ${golf ? "sichtbar" : "verborgen"}`);
+    ok(!(await p.isHidden(".countdown__done")) === today, `${label}: Countdown ${today ? "zeigt Geburtstagstext" : "läuft"}`);
+    if (label.startsWith("2.12")) {
+      await p.click('.tile[data-key="fruehstueck"]');
+      await p.waitForTimeout(500);
+      await shot(p, "h01-tipp-frueh-sichtbar");
+      await p.keyboard.press("Escape");
+      await p.click('.tile[data-key="minigolf"]');
+      await p.waitForTimeout(500);
+      await shot(p, "h02-tipp-noch-verborgen");
+    }
     await p.context().close();
   }
 

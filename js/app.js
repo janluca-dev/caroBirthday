@@ -49,6 +49,11 @@ const LOCKED_TEXT = [
   "Geduld, Geburtstagskind",
 ];
 
+// ── Datum: gemeinsame Logik für Countdown und Hinweise ───────────────
+const birthdayTime = new Date(settings.birthday).getTime();
+/** Ist der Zeitpunkt (ISO-Datum aus data.js) schon erreicht? */
+const reached = (iso) => Date.now() >= (iso ? new Date(iso).getTime() : birthdayTime);
+
 // ── Zeiten ───────────────────────────────────────────────────────────
 function timeRange(a) {
   const sp = a.startPrefix ? `${a.startPrefix} ` : "";
@@ -215,7 +220,7 @@ function showDashboard() {
 let cdTimer;
 function startCountdown() {
   clearInterval(cdTimer);
-  const target = new Date(settings.birthday).getTime();
+  const target = birthdayTime;
   const pad = (n) => String(n).padStart(2, "0");
   const tick = () => {
     const now = Date.now();
@@ -254,7 +259,7 @@ function tileHTML(entry, i) {
   if (entry.kind === "choice") {
     const half = (o, j) => `
       <span class="half" data-accent="${esc(o.accent)}">
-        <span class="half__icon">${icon(o.icon)}</span>
+        <span class="half__icon">${unlocked ? icon(o.icon) : ""}</span>
         <span class="half__title">${unlocked ? esc(o.title) : lockedTitle(i + j + 2)}</span>
       </span>`;
     return `
@@ -278,7 +283,7 @@ function tileHTML(entry, i) {
     <button type="button" class="tile ${unlocked ? "is-unlocked" : "is-locked"} ${entry.kind === "chosen" ? "tile--chosen" : ""}"
             data-key="${esc(entry.key)}" data-accent="${esc(a.accent)}">
       <span class="tile__top">
-        <span class="tile__icon">${icon(a.icon)}</span>
+        <span class="tile__icon">${unlocked ? icon(a.icon) : ""}</span>
         ${time}
       </span>
       <span class="tile__title">${unlocked ? esc(a.title) : lockedTitle(i)}</span>
@@ -335,13 +340,19 @@ function unlockDialog(entry, tile) {
         <div class="modal__backdrop" data-close></div>
         <div class="sheet" data-accent="${esc(accent)}">
           <button type="button" class="icon-btn sheet__close" data-close aria-label="${esc(ui.close)}">${icon("close")}</button>
-          <div class="sheet__lock" aria-hidden="true">${icon(entry.kind === "choice" ? "choice" : a.icon)}<span class="sheet__lockbadge">${icon("lock")}</span></div>
+          <div class="sheet__lock" aria-hidden="true">${
+            entry.kind === "choice"
+              ? `${icon("choice")}<span class="sheet__lockbadge">${icon("lock")}</span>`
+              : icon("lock", { className: "sheet__bigLock" })
+          }</div>
           <h2 class="sheet__title" id="u-title">${esc(ui.unlockTitle)}</h2>
           <p class="sheet__time" id="u-time">${esc(timeRange(a))}</p>
           ${
-            a.hint
-              ? `<div class="hint"><p class="hint__label">${icon("spark")} ${esc(ui.hintLabel)}</p><p class="hint__text">${esc(a.hint)}</p></div>`
-              : ""
+            !a.hint
+              ? ""
+              : reached(a.hintFrom)
+                ? `<div class="hint"><p class="hint__label">${icon("spark")} ${esc(ui.hintLabel)}</p><p class="hint__text">${esc(a.hint)}</p></div>`
+                : `<div class="hint hint--locked"><p class="hint__label">${icon("lock")} ${esc(ui.hintLabel)}</p><p class="hint__text">${esc(ui.hintLocked)}</p></div>`
           }
           <form class="sheet__form" novalidate>
             <label class="sheet__label" for="u-pw">${esc(ui.unlockLabel)}</label>
