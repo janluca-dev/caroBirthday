@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Passwort-Hasher</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { font: 16px/1.5 system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; }
+      label { display: block; font-weight: 600; margin-bottom: 6px; }
+      input, output { display: block; width: 100%; box-sizing: border-box; padding: 10px 12px; font: inherit; border: 1px solid #8886; border-radius: 8px; }
+      output { margin-top: 16px; font-family: ui-monospace, monospace; word-break: break-all; min-height: 2.6em; }
+      button { margin-top: 10px; padding: 8px 14px; font: inherit; border-radius: 8px; border: 1px solid #8886; cursor: pointer; }
+      p.small { opacity: 0.75; font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <h1>Passwort → Hash</h1>
+    <p>Klartext eintippen, Hash kopieren und in <code>data.js</code> bei <code>passwordHash</code> einsetzen.</p>
+    <label for="pw">Passwort (Klartext)</label>
+    <input id="pw" autocomplete="off" spellcheck="false" />
+    <output id="out" aria-live="polite"></output>
+    <button type="button" id="copy">Hash kopieren</button>
+    <p class="small">Groß/Kleinschreibung und Leerzeichen am Rand spielen keine Rolle – genau wie auf der Seite.
+      Diese Seite funktioniert nur über einen Server (z. B. <code>python3 -m http.server</code>), nicht per Doppelklick.</p>
+    <script type="module">
+      import { hashPassword, normalize } from "../js/hash.js";
+      const pw = document.getElementById("pw");
+      const out = document.getElementById("out");
+      pw.addEventListener("input", async () => {
+        out.value = pw.value ? await hashPassword(pw.value) : "";
+        out.title = `normalisiert: "${normalize(pw.value)}"`;
+      });
+      document.getElementById("copy").addEventListener("click", () => out.value && navigator.clipboard.writeText(out.value));
+      pw.focus();
+    </script>
+  </body>
+</html>
