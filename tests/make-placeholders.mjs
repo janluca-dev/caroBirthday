@@ -74,14 +74,27 @@ const images = {
       [220, 980].map((x) => `<circle cx="${x}" cy="300" r="160" fill="#fff1c9" opacity=".22"/><rect x="${x - 12}" y="330" width="24" height="170" rx="6" fill="#fff6e3" opacity=".8"/><path d="M${x} 270 c-18 22 -14 46 0 58 c14 -12 18 -36 0 -58z" fill="#fff3c4"/>`).join("") +
       dots(60, "#fff1d0", 3, 0.5),
   },
-  therme: {
-    icon: "spa",
-    stops: ["#b4f3ea", "#2fb5aa", "#103f5c"],
+  outlet: {
+    icon: "shop",
+    stops: ["#f9cfdd", "#d4508a", "#5e1636"],
+    deco: () => {
+      let s = "";
+      for (let i = 0; i <= 26; i++) {
+        const t = i / 26;
+        const x = -20 + t * 1240;
+        const y = 120 + Math.sin(t * Math.PI) * 70;
+        s += `<circle cx="${x}" cy="${y}" r="8" fill="#ffe3a8" opacity=".95"/><circle cx="${x}" cy="${y}" r="22" fill="#ffe3a8" opacity=".18"/>`;
+      }
+      return s + dots(70, "#fff0f6", 3, 0.6) + [160, 1040].map((x, i) => sparkle(x, [560, 600][i], 30, 0.7)).join("");
+    },
+  },
+  filmabend: {
+    icon: "film",
+    stops: ["#3b4fa8", "#1e2a66", "#0c1030"],
     deco: () =>
-      Array.from({ length: 45 }, () => {
-        const r = 6 + rnd() * 26;
-        return `<circle cx="${rnd() * W}" cy="${rnd() * H}" r="${r}" fill="none" stroke="#ffffff" stroke-width="2" opacity="${(0.15 + rnd() * 0.4).toFixed(2)}"/>`;
-      }).join("") + dots(40, "#ffffff", 3, 0.6),
+      `<rect x="300" y="150" width="600" height="380" rx="26" fill="#b4c2f6" opacity=".16"/><circle cx="600" cy="340" r="420" fill="#8fa3ff" opacity=".12"/>` +
+      dots(120, "#e6ebff", 2.5, 0.7) +
+      [180, 1020, 240, 960].map((x, i) => sparkle(x, [170, 610, 640, 140][i], 22 + i * 5, 0.7)).join(""),
   },
 };
 
@@ -112,7 +125,10 @@ function svgFor(name, cfg) {
 await mkdir(path.join(root, "images", "platzhalter"), { recursive: true });
 const browser = await chromium.launch({ executablePath: process.env.CHROME ?? "/usr/bin/google-chrome-stable" });
 const page = await browser.newPage({ viewport: { width: W, height: H } });
+// Nur bestimmte Bilder:  node make-placeholders.mjs outlet filmabend
+const only = process.argv.slice(2);
 for (const [name, cfg] of Object.entries(images)) {
+  if (only.length && !only.includes(name)) continue;
   const svg = svgFor(name, cfg);
   await writeFile(path.join(root, "images", "platzhalter", `${name}.svg`), svg);
   await page.setContent(`<html><body style="margin:0">${svg}</body></html>`);

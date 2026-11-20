@@ -447,6 +447,8 @@ function detailsHTML(a, { headingLevel = 3 } = {}) {
       ${placeHTML(a)}
     </div>
     <div class="prose">${paragraphs(a.description)}</div>
+    ${ideasHTML(a, h)}
+    ${pickHTML(a, h)}
     <section class="info info--wear">
       <${h} class="info__title">${icon("shirt")} ${esc(ui.wear)}</${h}>
       <p>${esc(a.wear)}</p>
@@ -457,6 +459,60 @@ function detailsHTML(a, { headingLevel = 3 } = {}) {
       }
     </section>
     ${a.note ? `<section class="info info--note"><${h} class="info__title">${icon("spark")} ${esc(ui.note)}</${h}><p>${esc(a.note)}</p></section>` : ""}`;
+}
+
+/** Unverbindliche Vorschläge (z. B. Filme) als kleine Liste. */
+function ideasHTML(a, h) {
+  const ideas = a.ideas;
+  if (!ideas?.items?.length) return "";
+  return `
+    <section class="info info--ideas">
+      <${h} class="info__title">${icon(a.icon)} ${esc(ideas.title)}</${h}>
+      ${ideas.intro ? `<p>${esc(ideas.intro)}</p>` : ""}
+      <ul class="ideas">${ideas.items
+        .map((i) => `<li><span class="ideas__title">${esc(i.title)}</span>${i.genre ? `<span class="ideas__genre">${esc(i.genre)}</span>` : ""}</li>`)
+        .join("")}</ul>
+    </section>`;
+}
+
+/** Kleine Auswahl auf der Karte; gewählt wird per Tippen, gespeichert unter picks[id]. */
+function pickHTML(a, h) {
+  const pick = a.pick;
+  if (!pick?.options?.length) return "";
+  const current = store.get().picks?.[a.id];
+  return `
+    <section class="info info--pick" data-pick="${esc(a.id)}">
+      <${h} class="info__title" id="pick-${esc(a.id)}">${icon("heart")} ${esc(pick.title)}</${h}>
+      ${pick.intro ? `<p>${esc(pick.intro)}</p>` : ""}
+      <div class="pick" role="group" aria-labelledby="pick-${esc(a.id)}">
+        ${pick.options
+          .map(
+            (o) => `
+          <button type="button" class="pick__opt" data-pick-opt="${esc(o.id)}" aria-pressed="${o.id === current}">
+            <span class="pick__icon">${icon(o.icon)}</span>
+            <span class="pick__label">${esc(o.label)}</span>
+            ${o.text ? `<span class="pick__text">${esc(o.text)}</span>` : ""}
+            <span class="pick__check">${icon("check")}</span>
+          </button>`,
+          )
+          .join("")}
+      </div>
+      <p class="pick__msg" role="status" aria-live="polite">${current ? esc(ui.picked) : ""}</p>
+    </section>`;
+}
+
+function wirePicks(root) {
+  root.querySelectorAll("[data-pick]").forEach((box) => {
+    box.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-pick-opt]");
+      if (!btn || btn.getAttribute("aria-pressed") === "true") return;
+      store.set({ picks: { ...store.get().picks, [box.dataset.pick]: btn.dataset.pickOpt } });
+      box.querySelectorAll("[data-pick-opt]").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      $(".pick__msg", box).textContent = ui.picked;
+      const r = btn.getBoundingClientRect();
+      confetti({ count: 50, origin: { x: r.left + r.width / 2, y: r.top } });
+    });
+  });
 }
 
 // ════════════════════════════════════════════════════════════════════
@@ -557,6 +613,7 @@ function openCard(entry, tile) {
   swipeToClose(bcard, close);
   openModal(m, { onRequestClose: close, initialFocus: $(".bcard__close", m), returnFocus: tile });
   wireImages(m);
+  wirePicks(m);
 
   // Öffnen: von der Kachel heranwachsen, dann aufklappen
   if (reducedMotion()) {

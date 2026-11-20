@@ -22,7 +22,7 @@ const section = (t) => console.log(`\n▸ ${t}`);
 await rm(shots, { recursive: true, force: true });
 await mkdir(shots, { recursive: true });
 
-const server = spawn("python3", ["-m", "http.server", String(PORT), "--bind", "127.0.0.1"], { cwd: root, stdio: "ignore" });
+const server = spawn(process.env.PYTHON ?? "python3", ["-m", "http.server", String(PORT), "--bind", "127.0.0.1"], { cwd: root, stdio: "ignore" });
 await new Promise((r) => setTimeout(r, 700));
 const browser = await chromium.launch({ executablePath: process.env.CHROME ?? "/usr/bin/google-chrome-stable" });
 
@@ -34,7 +34,9 @@ const SECRET_TITLES = [
   "Weihnachtsmarkt Esslingen",
   "Blacklight-Minigolf",
   "Abendessen mit deiner Familie",
-  "Panorama Therme Beuren",
+  "Outletcity Metzingen",
+  "Filmabend",
+  "Kindsköpfe",
 ];
 
 // Standard-Testzeitpunkt: vor dem Geburtstag (damit die Tests auch nach dem 3.12. stimmen)
@@ -99,7 +101,7 @@ try {
   const html = await appText(page);
   ok(SECRET_TITLES.every((t) => !html.includes(t)), "gesperrte Namen stehen NICHT im DOM");
   ok(await noHScroll(page), "kein horizontales Scrollen");
-  ok((await page.$$(".tile")).length === 5, "5 Kacheln (keine Fahrt-/Puffer-Kacheln)");
+  ok((await page.$$(".tile")).length === 6, "6 Kacheln (keine Fahrt-/Puffer-Kacheln)");
   ok(!html.match(/Fahrt|Puffer/), "keine Fahrtzeiten/Puffer erwähnt");
   ok(
     await page.evaluate(() =>
@@ -225,13 +227,32 @@ try {
   ok(tileText.includes("oder") && tileText.includes("Weihnachtsmarkt"), "Auswahl zurücksetzen öffnet die Wahl wieder");
 
   section("Mobil: alle entsperren");
-  for (const [k, pw] of [["minigolf", "neon"], ["abendessen", "Familie"], ["therme", "WELLNESS"]]) {
+  for (const [k, pw] of [["minigolf", "neon"], ["outlet", "Shoppen"], ["abendessen", "Familie"], ["filmabend", "POPCORN"]]) {
     await unlock(page, k, pw);
     await page.waitForSelector(".modal--card .bcard.is-settled", { timeout: 6000 });
     await page.waitForTimeout(300);
     await shot(page, `m17-karte-${k}`);
     const t = await page.textContent(".modal--card");
     if (k === "abendessen") ok(!t.includes("In Karten öffnen"), "Abendessen ohne Adresse/Kartenlink");
+    if (k === "minigolf") ok(!t.includes("Gästen") && t.includes("Wir zwei"), "Minigolf nur zu zweit");
+    if (k === "filmabend") {
+      ok(["Kindsköpfe", "Guarding Stars", "Weihnachten im Palast", "Ice Age"].every((f) => t.includes(f)), "Filmvorschläge stehen auf der Karte");
+      ok((await page.$$('.pick__opt[aria-pressed="true"]')).length === 0, "Filmabend: noch nichts gewählt");
+      await page.click('[data-pick-opt="familie"]');
+      ok((await page.getAttribute('[data-pick-opt="familie"]', "aria-pressed")) === "true", "Filmabend: Familie gewählt");
+      await page.click('[data-pick-opt="zweit"]');
+      ok(
+        (await page.getAttribute('[data-pick-opt="familie"]', "aria-pressed")) === "false" &&
+          (await page.getAttribute('[data-pick-opt="zweit"]', "aria-pressed")) === "true",
+        "Filmabend: umentscheiden geht",
+      );
+      await page.waitForTimeout(400);
+      await shot(page, "m17b-filmabend-wahl");
+      await closeTop(page);
+      await page.click('.tile[data-key="filmabend"]');
+      await page.waitForSelector(".modal--card .bcard.is-settled", { timeout: 6000 });
+      ok((await page.getAttribute('[data-pick-opt="zweit"]', "aria-pressed")) === "true", "Filmabend: Wahl bleibt gespeichert");
+    }
     await closeTop(page);
   }
   await page.evaluate(() => window.scrollTo(0, 0));
@@ -282,7 +303,7 @@ try {
   await page.click('[data-yes="weihnachtsmarkt"]');
   await page.waitForTimeout(3000);
   await shot(page, "d08-nach-wahl");
-  for (const [k, pw] of [["minigolf", "neon"], ["abendessen", "familie"], ["therme", "wellness"]]) {
+  for (const [k, pw] of [["minigolf", "neon"], ["outlet", "shopping"], ["abendessen", "familie"], ["filmabend", "popcorn"]]) {
     await unlock(page, k, pw);
     await page.waitForSelector(".modal--card .bcard.is-settled", { timeout: 6000 });
     await page.waitForTimeout(300);
@@ -369,7 +390,7 @@ try {
   page = await newPage(MOBILE, { reducedMotion: "reduce" });
   await passGate(page);
   ok(!(await page.$(".confetti-canvas")), "kein Konfetti bei reduced motion");
-  await unlock(page, "therme", "wellness");
+  await unlock(page, "filmabend", "popcorn");
   await page.waitForTimeout(400);
   ok(!!(await page.$(".modal--card .bcard.is-open")), "Karte öffnet sofort");
   await shot(page, "r01-reduced-motion-karte");

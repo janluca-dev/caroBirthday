@@ -47,7 +47,13 @@ Alles steht in **`data.js`** – Texte einfach zwischen den Anführungszeichen �
   Aktivität festlegen. Das Passwort funktioniert unabhängig davon jederzeit.
 - Gesperrte Kacheln zeigen nur eine unscharfe Farbfläche statt des Symbols; das Symbol
   erscheint erst beim Entsperren (die Wahl-Kachel zeigt ihr Symbol von Anfang an).
-- Ist `place.address` leer, gibt es keine Adresse und keinen Kartenlink (so beim Abendessen).
+- Ist `place.address` leer, gibt es keine Adresse und keinen Kartenlink (so beim Abendessen
+  und beim Filmabend).
+- `ideas` (optional) zeigt unverbindliche Vorschläge als kleine Liste, z. B. die Filmideen
+  beim Filmabend: `{ title, intro, items: [{ title, genre }] }`.
+- `pick` (optional) ist eine kleine Auswahl auf der Karte, z. B. „Wir zwei“ oder „Mit
+  deiner Familie“ beim Filmabend. Caro tippt an, was sie möchte, und kann sich jederzeit
+  umentscheiden. Die Wahl liegt nur in ihrem Browser – sie muss es dir also sagen.
 - `id` bitte nicht ändern – daran hängt der gespeicherte Entsperr-Zustand.
 
 Nach dem Speichern die Seite neu laden. Beim Testen ggf. im Footer zurücksetzen (s. u.).
@@ -62,8 +68,9 @@ Lege deine Fotos mit **genau diesen Namen** in `images/` ab (alte Datei übersch
 | `images/schnee.jpg`           | Schneespaziergang  |
 | `images/weihnachtsmarkt.jpg`  | Weihnachtsmarkt    |
 | `images/minigolf.jpg`         | Blacklight-Minigolf|
+| `images/outlet.jpg`           | Outletcity Metzingen |
 | `images/abendessen.jpg`       | Abendessen         |
-| `images/therme.jpg`           | Therme             |
+| `images/filmabend.jpg`        | Filmabend          |
 
 Tipps: Querformat 3:2, ca. 1200 × 800 px, unter ~300 KB (z. B. mit squoosh.app
 verkleinern). Ein anderes Format/Name geht auch – dann in `data.js` den Pfad bei
@@ -136,8 +143,15 @@ node make-placeholders.mjs   # Platzhalterbilder neu erzeugen
 ```
 
 Die Tests nutzen den installierten Google Chrome (`/usr/bin/google-chrome-stable`, über
-die Umgebungsvariable `CHROME=…` änderbar). Passwörter in `tests/e2e.mjs` müssen zu
-deinen geänderten Passwörtern passen, sonst schlagen die Tests fehl.
+die Umgebungsvariable `CHROME=…` änderbar) und starten den Testserver mit `python3`
+(änderbar über `PYTHON=…`). Unter Windows z. B. in Git Bash:
+
+```bash
+PYTHON=python CHROME="C:/Program Files/Google/Chrome/Application/chrome.exe" node e2e.mjs
+```
+
+Passwörter in `tests/e2e.mjs` müssen zu deinen geänderten Passwörtern passen, sonst
+schlagen die Tests fehl.
 
 ## Veröffentlichen
 

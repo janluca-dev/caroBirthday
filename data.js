@@ -82,6 +82,7 @@ export default {
     confirmYes: "Ja, genau das!",
     confirmNo: "Doch nochmal überlegen",
     chosen: "Abgemacht! Ich freu mich drauf.",
+    picked: "Abgemacht! Umentscheiden geht jederzeit.",
     resetChoice: "Auswahl zurücksetzen",
     resetChoiceQuestion: "Möchtest du die Vormittags-Wahl wirklich wieder öffnen?",
     resetAll: "Alles zurücksetzen",
@@ -96,8 +97,8 @@ export default {
   //
   // Felder einer Aktivität:
   //   id            interner Name (nicht ändern, sonst gilt die Karte als neu gesperrt)
-  //   icon          Symbol: cup, snow, market, golf, dinner, spa
-  //   accent        Farbe: gold, ice, market, neon, amber, teal
+  //   icon          Symbol: cup, snow, market, golf, shop, dinner, film, spa
+  //   accent        Farbe: gold, ice, market, neon, rose, amber, midnight, teal
   //   start / end   Uhrzeit "HH:MM"; end darf leer sein ("")
   //   endPrefix     z. B. "ca." vor der Endzeit
   //   startPrefix   z. B. "ab" vor der Startzeit
@@ -113,6 +114,9 @@ export default {
   //   wear          Dresscode
   //   bring         Liste zum Einpacken
   //   note          Hinweis-Feld für Besonderes
+  //   ideas         optional: { title, intro, items: [{ title, genre }] } – unverbindliche Vorschläge
+  //   pick          optional: { title, intro, options: [{ id, icon, label, text }] } – kleine Auswahl
+  //                 auf der Karte (wird im Browser gespeichert, umentscheiden jederzeit möglich)
   activities: [
     {
       id: "fruehstueck",
@@ -208,7 +212,7 @@ export default {
       end: "16:00",
       passwordHash: "1b6405d1ef5a816105210b20a8f0fc129869a25876e45c0891e4f6d972bf74c2",
       hint: "Ich bin ein Gas und leuchte bunt in Reklameschildern",
-      title: "Blacklight-Minigolf mit Gästen",
+      title: "Blacklight-Minigolf",
       tagline: "18 Bahnen im Schwarzlicht",
       place: {
         name: "Arcadia 3D Minigolf",
@@ -218,22 +222,54 @@ export default {
       image: "images/minigolf.jpg",
       imageAlt: "Platzhalterbild: leuchtende Minigolfbahn in Neonviolett, Pink und Cyan",
       description:
-        "Zusammen mit anderen spielen wir 18 Bahnen Minigolf im Schwarzlicht - mit " +
+        "Wir zwei spielen 18 Bahnen Minigolf im Schwarzlicht - mit " +
         "3D-Brille, bei der die Wände plötzlich lebendig werden.\n\n" +
         "Wer gewinnt, ist eigentlich egal (außer du gewinnst, dann ist es natürlich wichtig). " +
-        "Danach gibt es Snacks und wir chillen noch zusammen.",
+        "Ein kleines Duell nur zwischen uns beiden - Revanche nicht ausgeschlossen.",
       wear: "Bequem. Helle oder weiße Kleidung leuchtet im Schwarzlicht besonders schön.",
       bring: ["Etwas Weißes oder Helles zum Anziehen", "Ehrgeiz (optional)"],
       note: "Die 3D-Brillen sind inklusive.",
     },
 
     {
+      id: "outlet",
+      icon: "shop",
+      accent: "rose",
+      start: "16:30",
+      end: "18:15",
+      endPrefix: "ca.",
+      // zwei erlaubte Passwörter: "shopping" und "shoppen"
+      passwordHash: [
+        "1180412af43d78604a73f14d5a7ef83d3d3a74251ce8fb7b232043a511fbf161",
+        "d6d8a9432afbf740840fbb6606f0bc505e8260f8c7b9d48d58b13813932caf5f",
+      ],
+      hint: "Tüten, Schaufenster, Umkleidekabine - wie nennt man das, was wir hier machen?",
+      title: "Shoppen in der Outletcity Metzingen",
+      tagline: "Bummeln unter Weihnachtslichtern",
+      place: {
+        name: "Outletcity Metzingen",
+        address: "72555 Metzingen",
+        mapsQuery: "Outletcity Metzingen",
+      },
+      image: "images/outlet.jpg",
+      imageAlt: "Platzhalterbild: Einkaufstüten unter Lichterketten in Beerenrot und Rosé",
+      description:
+        "Auf dem Heimweg machen wir noch einen Abstecher nach Metzingen. Wenn es dunkel wird, gehen " +
+        "überall die Lichter an und die ganze Outletcity ist weihnachtlich geschmückt.\n\n" +
+        "Wir schlendern von Laden zu Laden, du probierst an, was dir gefällt, und ich sage dir ehrlich " +
+        "meine Meinung (versprochen). Vielleicht findest du ja schon etwas Schönes für unseren Urlaub.",
+      wear: "Warm und bequem - wir laufen draußen von Laden zu Laden. Am besten etwas, das sich schnell an- und ausziehen lässt, falls du etwas anprobieren willst.",
+      bring: ["Bequeme Schuhe", "Eine warme Jacke", "Platz in der Tasche"],
+      note: "Zwischendurch wärmen wir uns mit einer heißen Schokolade oder einem Glühwein auf.",
+    },
+
+    {
       id: "abendessen",
       icon: "dinner",
       accent: "amber",
-      start: "17:30",
+      start: "19:00",
       startPrefix: "ab",
-      end: "19:00",
+      end: "20:30",
       endPrefix: "ca.",
       passwordHash: "bc5efe441ea271818ec4099b258fb72af08d41cae2c5652bd8082b0d683e3af9",
       hint: "Die Menschen, die dich am längsten kennen und am meisten lieben.",
@@ -253,39 +289,55 @@ export default {
         "oder anderen Toast auf dich.",
       wear: "Gemütlich-schön. Du bist zu Hause, also zieh an, worin du dich wohlfühlst.",
       bring: ["Nur dich selbst"],
-      note: "Vorher ist Zeit zum Durchatmen: Ab 16:30 Uhr chillen wir erst einmal bei dir zu Hause.",
+      note: "Du musst nichts vorbereiten - lass dich einfach verwöhnen.",
     },
 
     {
-      id: "therme",
-      icon: "spa",
-      accent: "teal",
-      start: "19:30",
-      end: "21:45",
-      endPrefix: "ca.",
-      passwordHash: "bc90a50b2fa0d31ce6125f9ca1fb49983accd9400aeb1ea193af349c9be5f08d",
-      hint: "Das Gegenteil von Stress - ein Wort für Entspannung, das auch auf Englisch funktioniert.",
-      title: "Panorama Therme Beuren",
-      tagline: "Warmes Wasser unter dem Winterhimmel",
+      id: "filmabend",
+      icon: "film",
+      accent: "midnight",
+      start: "20:30",
+      startPrefix: "ab",
+      end: "",
+      passwordHash: "0a4ef253e3fef22cb9d3bc5280386f9f2d1cf351da6582d8254659d1b27ea0b3",
+      hint: "Es knallt im Topf, bevor der Film anfängt - und dann kommt die Frage: süß oder salzig?",
+      title: "Filmabend",
+      tagline: "Decke, Snacks und ein Film deiner Wahl",
       place: {
-        name: "Panorama Therme Beuren",
-        address: "Am Thermalbad 5, 72660 Beuren",
-        mapsQuery: "Panorama Therme Beuren",
+        name: "Bei dir zu Hause",
+        address: "",
+        mapsQuery: "",
       },
-      image: "images/therme.jpg",
-      imageAlt: "Platzhalterbild: dampfendes Thermalbecken in Türkis unter dem Abendhimmel",
+      image: "images/filmabend.jpg",
+      imageAlt: "Platzhalterbild: gemütlicher Filmabend im Licht des Fernsehers in Nachtblau",
       description:
-        "Zum Abschluss lassen wir den Tag im warmen Thermalwasser ausklingen. Draußen ist es kalt und " +
-        "dunkel, über uns vielleicht ein paar Sterne und wir treiben im dampfenden Becken.\n\n" +
-        "Keine Pläne mehr, kein Zeitstress. Nur warmes Wasser, Ruhe und wir zwei.",
-      wear: "Bequeme Kleidung, die schnell an- und ausgezogen ist.",
-      bring: [
-        "Bikini",
-        "Großes Handtuch",
-        "Badeschlappen",
-        "Wechselkleidung",
-      ],
-      note: "Die Badezeit endet 15 Minuten vor Schließung.",
+        "Zum Abschluss machen wir es uns einfach gemütlich. Kein Programm mehr, keine Uhrzeit - nur Sofa, " +
+        "Decke, Snacks und ein Film.\n\n" +
+        "Und heute bestimmst du: Du suchst den Film aus, ganz egal welchen. Lieblingsfilm, etwas Neues " +
+        "oder etwas, das du schon hundertmal gesehen hast - wir schauen, worauf du Lust hast.",
+      // Unverbindliche Vorschläge, falls ihr nichts einfällt
+      ideas: {
+        title: "Falls dir nichts einfällt",
+        intro: "Nur ein paar Ideen von mir, ganz unverbindlich. Wenn du etwas anderes schauen willst, schauen wir das.",
+        items: [
+          { title: "Kindsköpfe", genre: "Komödie" },
+          { title: "Guarding Stars", genre: "Weihnachtsfilm, neu auf Netflix" },
+          { title: "Weihnachten im Palast", genre: "Weihnachtsfilm" },
+          { title: "Ice Age", genre: "Komödie" },
+        ],
+      },
+      // Auswahl auf der Karte (wird im Browser gespeichert, umentscheiden geht jederzeit)
+      pick: {
+        title: "Mit wem schauen wir?",
+        intro: "Auch das entscheidest du. Tipp einfach an, worauf du Lust hast.",
+        options: [
+          { id: "zweit", icon: "heart", label: "Wir zwei", text: "Romantisch und kuschelig, nur du und ich." },
+          { id: "familie", icon: "family", label: "Mit deiner Familie", text: "Alle zusammen im Wohnzimmer." },
+        ],
+      },
+      wear: "Jogginghose, Kuschelsocken, dein gemütlichster Pulli - heute ausdrücklich erwünscht.",
+      bring: [],
+      note: "Um Popcorn und Snacks kümmere ich mich - du musst an gar nichts denken.",
     },
   ],
 };

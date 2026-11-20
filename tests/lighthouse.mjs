@@ -10,7 +10,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const data = (await import("../data.js")).default;
 const PORT = 8766;
 const URL = `http://localhost:${PORT}/`;
-const server = spawn("python3", ["-m", "http.server", String(PORT), "--bind", "127.0.0.1"], { cwd: root, stdio: "ignore" });
+const server = spawn(process.env.PYTHON ?? "python3", ["-m", "http.server", String(PORT), "--bind", "127.0.0.1"], { cwd: root, stdio: "ignore" });
 await new Promise((r) => setTimeout(r, 700));
 const browser = await chromium.launch({ executablePath: process.env.CHROME ?? "/usr/bin/google-chrome-stable", args: ["--remote-debugging-port=9333"] });
 const page = await (await browser.newContext()).newPage();

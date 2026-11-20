@@ -1,7 +1,7 @@
 // Zustand im localStorage. Alles in try/catch, damit die Seite auch ohne Speicher
 // (privater Modus, blockierter Speicher) funktioniert – dann eben nur bis zum Neuladen.
 
-const empty = () => ({ gate: false, unlocked: {}, choice: null, welcomed: false });
+const empty = () => ({ gate: false, unlocked: {}, choice: null, picks: {}, welcomed: false });
 
 export function createStore(key) {
   let state = empty();
