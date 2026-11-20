@@ -285,7 +285,7 @@ export default {
         address: "",
         mapsQuery: "",
       },
-      image: "images/abendessen.jpeg",
+      image: "images/abendessen.jpg",
       imageAlt: "Platzhalterbild: gedeckter Esstisch",
       description:
         "Nach so einem Tag gibt es nichts Schöneres, als nach Hause zu kommen. Dein Papa steht schon in " +
