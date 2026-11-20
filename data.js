@@ -122,7 +122,7 @@ export default {
       id: "fruehstueck",
       icon: "cup",
       accent: "gold",
-      start: "08:00",
+      start: "08:30",
       end: "10:00",
       passwordHash: "435e2a5662904f649cd72151c9194b295353d92b0396d3e53bb182b59e3d4a56",
       hintFrom: "2026-12-02T00:00:00+01:00", // Frühstück: schon einen Tag vorher
@@ -140,8 +140,8 @@ export default {
         "Dein Geburtstag beginnt nicht mit Stress, sondern mit duftendem Kaffee, frischen Brötchen " +
         "und allem worauf du Lust hast.\n\n" +
         "Im Sulzburgcafé setzen wir uns gemütlich hin, lassen den Morgen langsam ankommen und stoßen " +
-        "auf deinen Geburtstag an. Zwei Stunden nur für uns - bestell einfach, worauf du Lust hast.",
-      wear: "Schick-bequem. Etwas, in dem du dich hübsch fühlst und trotzdem zwei Stunden entspannt sitzen kannst.",
+        "auf deinen Geburtstag an. Zeit nur für uns - bestell einfach, worauf du Lust hast.",
+      wear: "Schick-bequem. Etwas, in dem du dich hübsch fühlst und trotzdem entspannt sitzen kannst.",
       bring: ["Gute Laune", "Hunger", "Eine warme Jacke für den Weg"],
       note: "Du musst an nichts denken – der Tisch ist reserviert.",
     },
@@ -153,7 +153,7 @@ export default {
       icon: "choice",
       accent: "choice",
       start: "10:30",
-      end: "12:00",
+      end: "13:00",
       passwordHash: "30c5461fc27b84f1f1ad0a83162a26882b22d11cdfa45978dd21c810056e8d0e",
       hint: "Die Jahreszeit, in der du Geburtstag hast.",
       options: [
@@ -174,7 +174,8 @@ export default {
             "Wir fahren hoch auf die Alb und laufen am Randecker Maar entlang des Albtraufs ungefähr zwei " +
             "Stunden einen leichten Weg, bei dem man gut nebeneinander reden kann.\n\n" +
             "Wenn Schnee liegt, knirscht es unter den Schuhen und die Welt ist ganz leise. Und falls nicht, " +
-            "bleibt es ein wunderschöner Spaziergang mit Aussicht bis weit ins Land.",
+            "bleibt es ein wunderschöner Spaziergang mit Aussicht bis weit ins Land.\n\n" +
+            "Auf dem Weg zum nächsten Programmpunkt holen wir uns dann etwas Leckeres zum Mittagessen.",
           wear: "Warme Winterkleidung im Zwiebellook, wasserfeste, dicke Schuhe, Mütze, und Handschuhe.",
           bring: ["Mütze, Handschuhe", "Dicke, wasserfeste Schuhe", "Thermoskanne mit etwas Warmem"],
           note: "Liegt kein Schnee, wird es ein entspannter Spaziergang mit Aussicht - schön wird's sowieso.",
@@ -196,9 +197,10 @@ export default {
             "Rund 180 Stände, Fachwerk, Fackeln und Gaukler: Der Esslinger Mittelalter- und Weihnachtsmarkt " +
             "ist einer der schönsten weit und breit.\n\n" +
             "Wir bummeln durch die Gassen, schauen den Handwerkern zu, wärmen uns die Hände am Glühwein " +
-            "und naschen uns einmal quer über den Markt.",
+            "und naschen uns einmal quer über den Markt.\n\n" +
+            "Zum Mittagessen holen wir uns direkt auf dem Markt etwas - such dir aus, was am besten duftet.",
           wear: "Warm einpacken und bequeme Schuhe zum enstpannten gehen - wir sind viel auf den Beinen.",
-          bring: ["Bequeme Schuhe", "Warme Handschuhe", "Platz im Bauch für Gebranntes und Glühwein"],
+          bring: ["Bequeme Schuhe", "Warme Handschuhe", "Platz im Bauch für Mittagessen, Gebranntes und Glühwein"],
           note: "Der Markt öffnet donnerstags um 11:00 Uhr - wir sind also fast die Ersten.",
         },
       ],
@@ -236,7 +238,7 @@ export default {
       icon: "shop",
       accent: "rose",
       start: "16:30",
-      end: "18:15",
+      end: "18:30",
       endPrefix: "ca.",
       // zwei erlaubte Passwörter: "shopping" und "shoppen"
       passwordHash: [
@@ -257,10 +259,13 @@ export default {
         "Auf dem Heimweg machen wir noch einen Abstecher nach Metzingen. Wenn es dunkel wird, gehen " +
         "überall die Lichter an und die ganze Outletcity ist weihnachtlich geschmückt.\n\n" +
         "Wir schlendern von Laden zu Laden, du probierst an, was dir gefällt, und ich sage dir ehrlich " +
-        "meine Meinung (versprochen). Vielleicht findest du ja schon etwas Schönes für unseren Urlaub.",
+        "meine Meinung (versprochen). Zwischendurch wärmen wir uns mit einer heißen Schokolade oder " +
+        "einem Glühwein auf.\n\n" +
+        "Und weil du dir eine neue Jeans wünschst, bekommst du von mir einen Gutschein über 50 € dazu. " +
+        "Such dir eine aus, in der du dich richtig wohlfühlst.",
       wear: "Warm und bequem - wir laufen draußen von Laden zu Laden. Am besten etwas, das sich schnell an- und ausziehen lässt, falls du etwas anprobieren willst.",
-      bring: ["Bequeme Schuhe", "Eine warme Jacke", "Platz in der Tasche"],
-      note: "Zwischendurch wärmen wir uns mit einer heißen Schokolade oder einem Glühwein auf.",
+      bring: ["Bequeme Schuhe", "Eine warme Jacke", "Platz in der Tasche für deine neue Jeans"],
+      note: "Den Gutschein habe ich dabei - du musst nur noch die passende Jeans finden.",
     },
 
     {
@@ -269,7 +274,7 @@ export default {
       accent: "amber",
       start: "19:00",
       startPrefix: "ab",
-      end: "20:30",
+      end: "21:00",
       endPrefix: "ca.",
       passwordHash: "bc5efe441ea271818ec4099b258fb72af08d41cae2c5652bd8082b0d683e3af9",
       hint: "Die Menschen, die dich am längsten kennen und am meisten lieben.",
@@ -289,14 +294,14 @@ export default {
         "oder anderen Toast auf dich.",
       wear: "Gemütlich-schön. Du bist zu Hause, also zieh an, worin du dich wohlfühlst.",
       bring: ["Nur dich selbst"],
-      note: "Du musst nichts vorbereiten - lass dich einfach verwöhnen.",
+      note: "Vorher ist noch Zeit zum Ankommen und Frischmachen. Du musst nichts vorbereiten - lass dich einfach verwöhnen.",
     },
 
     {
       id: "filmabend",
       icon: "film",
       accent: "midnight",
-      start: "20:30",
+      start: "21:00",
       startPrefix: "ab",
       end: "",
       passwordHash: "0a4ef253e3fef22cb9d3bc5280386f9f2d1cf351da6582d8254659d1b27ea0b3",
