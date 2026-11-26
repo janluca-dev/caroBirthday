@@ -122,11 +122,11 @@ export default {
       id: "fruehstueck",
       icon: "cup",
       accent: "gold",
-      start: "08:30",
-      end: "10:00",
+      start: "09:30",
+      end: "10:30",
       passwordHash: "435e2a5662904f649cd72151c9194b295353d92b0396d3e53bb182b59e3d4a56",
       hintFrom: "2026-12-02T00:00:00+01:00", // Frühstück: schon einen Tag vorher
-      hint: "Ohne mich startest du keinen Morgen. Ich bin schwarz, heiß und manchmal mit Milch.",
+      hint: "Ohne mich startest du keinen Morgen. Ich bin schwarz, heiß und mit Milch.",
       title: "Frühstück im Hofcafé",
       tagline: "Ein Morgen in Zweisamkeit",
       place: {
@@ -137,13 +137,13 @@ export default {
       image: "images/fruehstueck.jpg",
       imageAlt: "Platzhalterbild: gedeckter Frühstückstisch in warmem Gold",
       description:
-        "Dein Geburtstag beginnt nicht mit Stress, sondern mit duftendem Kaffee, frischen Brötchen " +
+        "Dein Geburtstag beginnt nicht mit Stress, sondern mit einem schönen Kaffee, frischen Brötchen " +
         "und allem worauf du Lust hast.\n\n" +
         "Im Sulzburgcafé setzen wir uns gemütlich hin, lassen den Morgen langsam ankommen und stoßen " +
         "auf deinen Geburtstag an. Zeit nur für uns - bestell einfach, worauf du Lust hast.",
       wear: "Schick-bequem. Etwas, in dem du dich hübsch fühlst und trotzdem entspannt sitzen kannst.",
       bring: ["Gute Laune", "Hunger", "Eine warme Jacke für den Weg"],
-      note: "Du musst an nichts denken – der Tisch ist reserviert.",
+      note: "Du musst an nichts denken – der Tisch ist schon reserviert.",
     },
 
     {
@@ -152,7 +152,7 @@ export default {
       type: "choice",
       icon: "choice",
       accent: "choice",
-      start: "10:30",
+      start: "11:00",
       end: "13:00",
       passwordHash: "30c5461fc27b84f1f1ad0a83162a26882b22d11cdfa45978dd21c810056e8d0e",
       hint: "Die Jahreszeit, in der du Geburtstag hast.",
@@ -172,12 +172,12 @@ export default {
           imageAlt: "Platzhalterbild: verschneite Albhügel in Eisblau",
           description:
             "Wir fahren hoch auf die Alb und laufen am Randecker Maar entlang des Albtraufs ungefähr zwei " +
-            "Stunden einen leichten Weg, bei dem man gut nebeneinander reden kann.\n\n" +
-            "Wenn Schnee liegt, knirscht es unter den Schuhen und die Welt ist ganz leise. Und falls nicht, " +
-            "bleibt es ein wunderschöner Spaziergang mit Aussicht bis weit ins Land.\n\n" +
+            "Stunden einen leichten Weg, bei dem man gut miteinander reden kann.\n\n" +
+            "Wenn Schnee liegt, knirscht es sogar unter den Schuhen. Und falls nicht, " +
+            "bleibt es ein wunderschöner Spaziergang mit super Aussicht.\n\n" +
             "Auf dem Weg zum nächsten Programmpunkt holen wir uns dann etwas Leckeres zum Mittagessen.",
-          wear: "Warme Winterkleidung im Zwiebellook, wasserfeste, dicke Schuhe, Mütze, und Handschuhe.",
-          bring: ["Mütze, Handschuhe", "Dicke, wasserfeste Schuhe", "Thermoskanne mit etwas Warmem"],
+          wear: "Warme Winterkleidung, wasserfeste, dicke Schuhe, Mütze, und Handschuhe.",
+          bring: ["Mütze, Handschuhe", "Dicke, wasserfeste Schuhe"],
           note: "Liegt kein Schnee, wird es ein entspannter Spaziergang mit Aussicht - schön wird's sowieso.",
         },
         {
@@ -195,13 +195,13 @@ export default {
           imageAlt: "Platzhalterbild: Marktstände mit Lichterketten in Rot und Tannengrün",
           description:
             "Rund 180 Stände, Fachwerk, Fackeln und Gaukler: Der Esslinger Mittelalter- und Weihnachtsmarkt " +
-            "ist einer der schönsten weit und breit.\n\n" +
-            "Wir bummeln durch die Gassen, schauen den Handwerkern zu, wärmen uns die Hände am Glühwein " +
-            "und naschen uns einmal quer über den Markt.\n\n" +
+            "ist einer der schönsten in der Umgebung.\n\n" +
+            "Wir bummeln durch die Gassen, wärmen uns die Hände am Glühwein " +
+            "und snacken uns einmal quer durch den Markt.\n\n" +
             "Zum Mittagessen holen wir uns direkt auf dem Markt etwas - such dir aus, was am besten duftet.",
           wear: "Warm einpacken und bequeme Schuhe zum enstpannten gehen - wir sind viel auf den Beinen.",
-          bring: ["Bequeme Schuhe", "Warme Handschuhe", "Platz im Bauch für Mittagessen, Gebranntes und Glühwein"],
-          note: "Der Markt öffnet donnerstags um 11:00 Uhr - wir sind also fast die Ersten.",
+          bring: ["Bequeme Schuhe", "Warme Handschuhe", "Platz im Bauch für Mittagessen, Gebrannte Mandeln und evtl Glühwein"],
+          note: "Der Markt öffnet donnerstags um 11:00 Uhr - wir sind also sogar die Ersten.",
         },
       ],
     },
@@ -224,13 +224,12 @@ export default {
       image: "images/minigolf.jpg",
       imageAlt: "Platzhalterbild: leuchtende Minigolfbahn in Neonviolett, Pink und Cyan",
       description:
-        "Wir zwei spielen 18 Bahnen Minigolf im Schwarzlicht - mit " +
-        "3D-Brille, bei der die Wände plötzlich lebendig werden.\n\n" +
-        "Wer gewinnt, ist eigentlich egal (außer du gewinnst, dann ist es natürlich wichtig). " +
+        "Wir zwei spielen 18 Bahnen Minigolf im Schwarzlicht.\n\n" +
+        "Wer gewinnt, ist eigentlich egal, hauptsache du hast Spaß. " +
         "Ein kleines Duell nur zwischen uns beiden - Revanche nicht ausgeschlossen.",
       wear: "Bequem. Helle oder weiße Kleidung leuchtet im Schwarzlicht besonders schön.",
       bring: ["Etwas Weißes oder Helles zum Anziehen", "Ehrgeiz (optional)"],
-      note: "Die 3D-Brillen sind inklusive.",
+      note: "3D-Brillen sind sogar dabei.",
     },
 
     {
@@ -245,7 +244,7 @@ export default {
         "1180412af43d78604a73f14d5a7ef83d3d3a74251ce8fb7b232043a511fbf161",
         "d6d8a9432afbf740840fbb6606f0bc505e8260f8c7b9d48d58b13813932caf5f",
       ],
-      hint: "Tüten, Schaufenster, Umkleidekabine - wie nennt man das, was wir hier machen?",
+      hint: "Tüten, Klamotten, Umkleidekabine - wie nennt man das, was wir hier machen?",
       title: "Shoppen in der Outletcity Metzingen",
       tagline: "Bummeln unter Weihnachtslichtern",
       place: {
@@ -258,14 +257,14 @@ export default {
       description:
         "Auf dem Heimweg machen wir noch einen Abstecher nach Metzingen. Wenn es dunkel wird, gehen " +
         "überall die Lichter an und die ganze Outletcity ist weihnachtlich geschmückt.\n\n" +
-        "Wir schlendern von Laden zu Laden, du probierst an, was dir gefällt, und ich sage dir ehrlich " +
-        "meine Meinung (versprochen). Zwischendurch wärmen wir uns mit einer heißen Schokolade oder " +
-        "einem Glühwein auf.\n\n" +
+        "Wir gehen von Laden zu Laden, du probierst an, was dir gefällt, und ich sage dir " +
+        "wie es aussieht :). Zwischendurch können wir natürlich noch was snacken ;)\n\n" +
         "Und weil du dir eine neue Jeans wünschst, bekommst du von mir einen Gutschein über 50 € dazu. " +
-        "Such dir eine aus, in der du dich richtig wohlfühlst.",
-      wear: "Warm und bequem - wir laufen draußen von Laden zu Laden. Am besten etwas, das sich schnell an- und ausziehen lässt, falls du etwas anprobieren willst.",
+        "Such dir eine aus, in der du dich richtig wohlfühlst. Und falls du doch keine Jeans willst, kannst " +
+        "du natürlich auch etwas anderes raussuchen.",
+      wear: "Warm und bequem - wir laufen draußen von Laden zu Laden.",
       bring: ["Bequeme Schuhe", "Eine warme Jacke", "Platz in der Tasche für deine neue Jeans"],
-      note: "Den Gutschein habe ich dabei - du musst nur noch die passende Jeans finden.",
+      note: "Ich zahl und du musst nur noch die passende Jeans finden.",
     },
 
     {
@@ -279,22 +278,21 @@ export default {
       passwordHash: "bc5efe441ea271818ec4099b258fb72af08d41cae2c5652bd8082b0d683e3af9",
       hint: "Die Menschen, die dich am längsten kennen und am meisten lieben.",
       title: "Abendessen mit deiner Familie",
-      tagline: "Dein Papa kocht",
+      tagline: "Dein Dad kocht",
       place: {
-        name: "Bei dir zu Hause",
+        name: "Daheim",
         address: "",
         mapsQuery: "",
       },
       image: "images/abendessen.jpg",
       imageAlt: "Platzhalterbild: gedeckter Esstisch",
       description:
-        "Nach so einem Tag gibt es nichts Schöneres, als nach Hause zu kommen. Dein Papa steht schon in " +
-        "der Küche und kocht für dich, der Tisch ist gedeckt, und alle, die dich lieben, sitzen zusammen.\n\n" +
-        "Ein Abendessen mit deiner Familie - mit vielen Geschichten, viel Lachen und bestimmt dem einen " +
-        "oder anderen Toast auf dich.",
+        "Nach so einem Tag gibt es nichts besseres, als noch daheim zu chillen. Dein Dad ist heute fürs " +
+        "Abendessen zuständig. Du musst nichts machen, außer dich an den Tisch zu setzen.\n\n" +
+        "Ein Abendessen mit deiner Familie und sehr viel Ruhe.",
       wear: "Gemütlich-schön. Du bist zu Hause, also zieh an, worin du dich wohlfühlst.",
       bring: ["Nur dich selbst"],
-      note: "Vorher ist noch Zeit zum Ankommen und Frischmachen. Du musst nichts vorbereiten - lass dich einfach verwöhnen.",
+      note: "Vorher ist noch Zeit zum Ankommen und Duschen. Du musst nichts vorbereiten - lass dich einfach verwöhnen.",
     },
 
     {
@@ -309,21 +307,21 @@ export default {
       title: "Filmabend",
       tagline: "Decke, Snacks und ein Film deiner Wahl",
       place: {
-        name: "Bei dir zu Hause",
+        name: "Daheim",
         address: "",
         mapsQuery: "",
       },
       image: "images/filmabend.jpg",
       imageAlt: "Platzhalterbild: gemütlicher Filmabend im Licht des Fernsehers in Nachtblau",
       description:
-        "Zum Abschluss machen wir es uns einfach gemütlich. Kein Programm mehr, keine Uhrzeit - nur Sofa, " +
+        "Zum Abschluss machen wir es uns einfach gemütlich. Nichts mehr geplant, sondern nur noch " +
         "Decke, Snacks und ein Film.\n\n" +
         "Und heute bestimmst du: Du suchst den Film aus, ganz egal welchen. Lieblingsfilm, etwas Neues " +
-        "oder etwas, das du schon hundertmal gesehen hast - wir schauen, worauf du Lust hast.",
+        "oder etwas, was du schon hundertmal gesehen hast - wir schauen genau das, worauf du Lust hast.",
       // Unverbindliche Vorschläge, falls ihr nichts einfällt
       ideas: {
         title: "Falls dir nichts einfällt",
-        intro: "Nur ein paar Ideen von mir, ganz unverbindlich. Wenn du etwas anderes schauen willst, schauen wir das.",
+        intro: "Nur ein paar Ideen von mir, musst du aber natürlich nicht wählen. Wenn du etwas anderes schauen willst, schauen wir das.",
         items: [
           { title: "Kindsköpfe", genre: "Komödie" },
           { title: "Guarding Stars", genre: "Weihnachtsfilm, neu auf Netflix" },
@@ -337,10 +335,10 @@ export default {
         intro: "Auch das entscheidest du. Tipp einfach an, worauf du Lust hast.",
         options: [
           { id: "zweit", icon: "heart", label: "Wir zwei", text: "Romantisch und kuschelig, nur du und ich." },
-          { id: "familie", icon: "family", label: "Mit deiner Familie", text: "Alle zusammen im Wohnzimmer." },
+          { id: "familie", icon: "family", label: "Mit deiner Familie", text: "Alle zusammen auf der Couch." },
         ],
       },
-      wear: "Jogginghose, Kuschelsocken, dein gemütlichster Pulli - heute ausdrücklich erwünscht.",
+      wear: "Jogginghose, Kuschelsocken, dein gemütlichster Pulli",
       bring: [],
       note: "Um Popcorn und Snacks kümmere ich mich - du musst an gar nichts denken.",
     },
