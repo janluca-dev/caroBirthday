@@ -210,7 +210,7 @@ export default {
       id: "minigolf",
       icon: "golf",
       accent: "neon",
-      start: "14:00",
+      start: "14:15",
       end: "16:00",
       passwordHash: "1b6405d1ef5a816105210b20a8f0fc129869a25876e45c0891e4f6d972bf74c2",
       hint: "Ich bin ein Gas und leuchte bunt in Reklameschildern",
